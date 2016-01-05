@@ -13,8 +13,8 @@ def label_image(image_url):
     filename = str(time.time()).replace(".", "") + ".jpg"
     urllib.urlretrieve (image_url, "tmp/" + filename)
 
-    subprocess.call(['convert', "tmp/" + filename, RESOLUTION, "tmp/" + filename.replace(".jpg", "_small.jpg")])
-    print "CALLED:", ['convert', "tmp/" + filename, RESOLUTION, "tmp/" + filename.replace(".jpg", "_small.jpg")]
+    subprocess.call(['convert', "tmp/" + filename, "-resize " + RESOLUTION, "tmp/" + filename.replace(".jpg", "_small.jpg")])
+    print "CALLED:", ['convert', "tmp/" + filename, "-resize " + RESOLUTION, "tmp/" + filename.replace(".jpg", "_small.jpg")]
     # convert myfigure.png -resize 200x100 myfigure.jpg
 
 
