@@ -6,6 +6,7 @@ import time
 import subprocess
 
 RESOLUTION = "600x336"
+PHANTOMJS_BIN = "./install/phantomjs/bin/phantomjs"
 
 def label_image(image_url):
     print "downloading image from:", image_url
@@ -13,10 +14,18 @@ def label_image(image_url):
     filename = str(time.time()).replace(".", "") + ".jpg"
     urllib.urlretrieve (image_url, "tmp/" + filename)
 
-    subprocess.call(['convert', "tmp/" + filename, "-resize", RESOLUTION, "tmp/" + filename.replace(".jpg", "_small.jpg")])
-    print "CALLED:", ['convert', "tmp/" + filename, "-resize", RESOLUTION, "tmp/" + filename.replace(".jpg", "_small.jpg")]
-    # convert myfigure.png -resize 200x100 myfigure.jpg
+    # scale image to fit required resolution for our webpage
+    subprocess.call(['convert', "tmp/" + filename, "-resize", RESOLUTION, "/var/www/html/render/image.jpg"])
+    # TODO - use this to make multithread proof:
+    # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
+    print "CALLED:", ['convert', "tmp/" + filename, "-resize", RESOLUTION, "/var/www/html/render/image.jpg"]
 
+    # render output image
+    subprocess.call([PHANTOMJS_BIN,
+                     "labelImage.js",
+                     "http://images.mixd.tv/render/image.html",
+                     "/var/www/html/render/test_out.jpg",
+                     "600px*336px"])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
