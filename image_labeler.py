@@ -20,9 +20,9 @@ def label_image(image_url, image_title):
     # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
     print "CALLED:", ['convert', "tmp/" + filename, "-resize", RESOLUTION, "/var/www/html/render/image.jpg"]
 
-    with open("webpage/image.html", "wt") as fout:
+    with open("/var/www/html/render/image.html", "wt") as fout:
         # TODO - fix this to make multithread proof:
-        with open("/var/www/html/render/image.html", "rt") as fin:
+        with open("webpage/image.html", "rt") as fin:
             for line in fin:
                 fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
 
