@@ -6,7 +6,7 @@ import time
 import subprocess
 
 RESOLUTION = "600x336"
-PHANTOMJS_BIN = "./install/phantomjs/bin/phantomjs"
+PHANTOMJS_BIN = "/home/ubuntu/install/phantomjs/bin/phantomjs"
 
 def label_image(image_url, image_title):
     print "downloading image from:", image_url
