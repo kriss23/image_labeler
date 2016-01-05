@@ -8,7 +8,7 @@ import subprocess
 RESOLUTION = "600x336"
 PHANTOMJS_BIN = "./install/phantomjs/bin/phantomjs"
 
-def label_image(image_url):
+def label_image(image_url, image_title):
     print "downloading image from:", image_url
     # generate unitque filename for tmp file
     filename = str(time.time()).replace(".", "") + ".jpg"
@@ -20,6 +20,12 @@ def label_image(image_url):
     # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
     print "CALLED:", ['convert', "tmp/" + filename, "-resize", RESOLUTION, "/var/www/html/render/image.jpg"]
 
+    with open("webpage/image.html", "wt") as fout:
+        # TODO - fix this to make multithread proof:
+        with open("/var/www/html/render/image.html", "rt") as fin:
+            for line in fin:
+                fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
+
     # render output image
     subprocess.call([PHANTOMJS_BIN,
                      "labelImage.js",
@@ -30,6 +36,7 @@ def label_image(image_url):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', help='URL to dowload image from')
+    parser.add_argument('--title', help='Title to put on the image')
     # parser.add_argument('--restore', action='store_true', default=False, help='Restore from last Backup')
     args = parser.parse_args()
-    label_image(args.url)
+    label_image(args.url, args.title)
