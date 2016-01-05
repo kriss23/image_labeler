@@ -1,4 +1,4 @@
-"use strict";
+// "use strict"; // needs to be disabled to set pageWidth
 var page = require('webpage').create(),
     system = require('system'),
     address, output, size;
