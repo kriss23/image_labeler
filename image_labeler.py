@@ -25,7 +25,7 @@ def label_image(image_url, image_title, uuid):
         with open("webpage/image.html", "rt") as fin:
             for line in fin:
                 fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
-                fout.write(line.replace('{{IMAGE_FILE}}', "http://http://images.mixd.tv/images/tmp/" + input_filename))
+                fout.write(line.replace('{{IMAGE_FILE}}', "http://images.mixd.tv/images/tmp/" + input_filename))
 
     # render output image
     subprocess.call([PHANTOMJS_BIN,
