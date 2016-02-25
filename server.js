@@ -12,12 +12,14 @@ app.get('*', function(req, res, next){
     next();
 });
 
-app.get('/image-import/:imageURL/:titleString', function(req, res) {
+app.get('/image-import/:imageURL/:titleString/:uuid', function(req, res) {
     var cmd = '/usr/bin/python image_labeler.py --url="http://image.tmdb.org/t/p/original/' +
         req.params.imageURL +
         '" --title="' +
         req.params.titleString
         +
+        '" --uuid="' +
+        req.params.uuid +
         '"'
     console.log("running: " + cmd)
     exec(cmd, function(error, stdout, stderr) {

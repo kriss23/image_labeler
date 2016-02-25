@@ -8,7 +8,7 @@ import subprocess
 RESOLUTION = "600x336"
 PHANTOMJS_BIN = "/home/ubuntu/install/phantomjs/bin/phantomjs"
 
-def label_image(image_url, image_title):
+def label_image(image_url, image_title, uuid):
     print "downloading image from:", image_url
     # generate unitque filename for tmp file
     filename = str(time.time()).replace(".", "") + ".jpg"
@@ -26,17 +26,20 @@ def label_image(image_url, image_title):
             for line in fin:
                 fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
 
+    output_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
+
     # render output image
     subprocess.call([PHANTOMJS_BIN,
                      "labelImage.js",
                      "http://images.mixd.tv/render/image.html",
-                     "/var/www/html/render/test_out.jpg",
+                     "/var/www/html/336/" + output_filename,
                      "600px*336px"])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', help='URL to dowload image from')
     parser.add_argument('--title', help='Title to put on the image')
+    parser.add_argument('--uuid', help='UUID to name the image')
     # parser.add_argument('--restore', action='store_true', default=False, help='Restore from last Backup')
     args = parser.parse_args()
-    label_image(args.url, args.title)
+    label_image(args.url, args.title, args.uuid)
