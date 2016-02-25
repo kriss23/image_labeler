@@ -13,7 +13,7 @@ def label_image(image_url, image_title, uuid):
     # generate unitque filename for tmp file
     input_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
     output_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
-    urllib.urlretrieve (image_url, "/var/www/html/tmp/" + input_filename)
+    urllib.urlretrieve (image_url, "/var/www/html/images/tmp/" + input_filename)
 
     # scale image to fit required resolution for our webpage
     subprocess.call(['convert', "/var/www/html/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename])
