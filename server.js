@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var exec = require('child_process').exec;
 
 var app = express()
 app.use(bodyParser.json())
@@ -12,10 +13,21 @@ app.get('*', function(req, res, next){
 });
 
 app.get('/image-import/:imageURL/:titleString', function(req, res) {
+    var cmd = '/usr/bin/python image_labeler.py --url="http://image.tmdb.org/t/p/original/' +
+        req.params.imageURL +
+        '" --title="' +
+        req.params.titleString
+        +
+        '"'
+    console.log("running: " + cmd)
+    exec(cmd, function(error, stdout, stderr) {
+        console.log(stdout)
+    });
+
     res.send({
         'result': 'TBD',
         'msg': {
-            'img': "would load " + req.params.imageURL
+            'img': "would load " + req.params.imageURL,
             'title': "would load " + req.params.titleString
         }
     });
@@ -32,6 +44,6 @@ app.get('/', function(req, res) {
 
 
 
-app.listen(3000, function(){
-    console.log('Server listening on', 3000)
+app.listen(9756, function(){
+    console.log('Server listening on', 9756)
 })
