@@ -32,7 +32,7 @@ def label_image(image_url, image_title, uuid):
     subprocess.call([PHANTOMJS_BIN,
                      "labelImage.js",
                      "http://images.mixd.tv/render/image.html",
-                     "/var/www/html/336/" + output_filename,
+                     "/var/www/html/images/336/" + output_filename,
                      "600px*336px"])
 
 if __name__ == '__main__':
