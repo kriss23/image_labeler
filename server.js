@@ -5,6 +5,11 @@ var exec = require('child_process').exec;
 var app = express()
 app.use(bodyParser.json())
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 app.get('*', function(req, res, next){
     // if(req.headers.host == 'vion-stage.mixd.tv' || req.headers.host == 'localhost:3000')  //if it's a sub-domain
     if(req.headers.host == 'vion-stage.mixd.tv')  //if it's a sub-domain
@@ -26,11 +31,16 @@ app.get('/image-import/:imageURL/:titleString/:uuid', function(req, res) {
         console.log(stdout)
     });
 
+    var URLTitlePart = req.params.titleString.replaceAll(" ", "_")
+    var URLFilename = "http://images.mixd.tv/images/336/" + URLTitlePart + "_" + req.params.uuid + ".jpg"
+
     res.send({
         'result': 'TBD',
         'msg': {
-            'img': "would load " + req.params.imageURL,
-            'title': "would load " + req.params.titleString
+            'title': req.params.titleString,
+            'source': req.params.imageURL,
+            'imageID': req.params.uuid,
+            'targetURL': URLFilename
         }
     });
 })
