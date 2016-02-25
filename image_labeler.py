@@ -11,22 +11,21 @@ PHANTOMJS_BIN = "/home/ubuntu/install/phantomjs/bin/phantomjs"
 def label_image(image_url, image_title, uuid):
     print "downloading image from:", image_url
     # generate unitque filename for tmp file
-    filename = str(time.time()).replace(".", "") + ".jpg"
-    imput_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
+    input_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
     output_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
-    urllib.urlretrieve (image_url, "tmp/" + imput_filename)
+    urllib.urlretrieve (image_url, "/var/www/html/tmp/" + input_filename)
 
     # scale image to fit required resolution for our webpage
-    subprocess.call(['convert', "tmp/" + imput_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename])
+    subprocess.call(['convert', "/var/www/html/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename])
     # TODO - use this to make multithread proof:
     # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
-    print "CALLED:", ['convert', "tmp/" + imput_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename]
+    print "CALLED:", ['convert', "/var/www/html/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename]
 
     with open("/var/www/html/render/image.html", "wt") as fout:
-        # TODO - fix this to make multithread proof:
-        with open("webpage/image.html", "rt") as fin:
+        with open("webpage/image_" + uuid + ".html", "rt") as fin:
             for line in fin:
                 fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
+                fout.write(line.replace('{{IMAGE_FILE}}', "http://http://images.mixd.tv/images/tmp/" + input_filename))
 
     # render output image
     subprocess.call([PHANTOMJS_BIN,
