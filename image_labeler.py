@@ -21,8 +21,8 @@ def label_image(image_url, image_title, uuid):
     # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
     print "CALLED:", ['convert', "/var/www/html/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename]
 
-    with open("/var/www/html/render/image.html", "wt") as fout:
-        with open("webpage/image_" + uuid + ".html", "rt") as fin:
+    with open("/var/www/html/render/image_" + uuid + ".html", "wt") as fout:
+        with open("webpage/image.html", "rt") as fin:
             for line in fin:
                 fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
                 fout.write(line.replace('{{IMAGE_FILE}}', "http://http://images.mixd.tv/images/tmp/" + input_filename))
