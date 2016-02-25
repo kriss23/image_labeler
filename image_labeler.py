@@ -12,21 +12,21 @@ def label_image(image_url, image_title, uuid):
     print "downloading image from:", image_url
     # generate unitque filename for tmp file
     filename = str(time.time()).replace(".", "") + ".jpg"
-    urllib.urlretrieve (image_url, "tmp/" + filename)
+    imput_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
+    output_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
+    urllib.urlretrieve (image_url, "tmp/" + imput_filename)
 
     # scale image to fit required resolution for our webpage
-    subprocess.call(['convert', "tmp/" + filename, "-resize", RESOLUTION, "/var/www/html/render/image.jpg"])
+    subprocess.call(['convert', "tmp/" + imput_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename])
     # TODO - use this to make multithread proof:
     # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
-    print "CALLED:", ['convert', "tmp/" + filename, "-resize", RESOLUTION, "/var/www/html/render/image.jpg"]
+    print "CALLED:", ['convert', "tmp/" + imput_filename, "-resize", RESOLUTION, "/var/www/html/336/" + output_filename]
 
     with open("/var/www/html/render/image.html", "wt") as fout:
         # TODO - fix this to make multithread proof:
         with open("webpage/image.html", "rt") as fin:
             for line in fin:
                 fout.write(line.replace('{{IMAGE_TITLE}}', image_title))
-
-    output_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
 
     # render output image
     subprocess.call([PHANTOMJS_BIN,
