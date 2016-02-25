@@ -16,10 +16,10 @@ def label_image(image_url, image_title, uuid):
     urllib.urlretrieve (image_url, "/var/www/html/images/tmp/" + input_filename)
 
     # scale image to fit required resolution for our webpage
-    subprocess.call(['convert', "/var/www/html/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/tmp/" + output_filename])
+    subprocess.call(['convert', "/var/www/html/images/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/images/tmp/" + output_filename])
     # TODO - use this to make multithread proof:
     # , "tmp/" + filename.replace(".jpg", "_small.jpg")])
-    print "CALLED:", ['convert', "/var/www/html/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/tmp/" + output_filename]
+    print "CALLED:", ['convert', "/var/www/html/images/tmp/" + input_filename, "-resize", RESOLUTION, "/var/www/html/images/tmp/" + output_filename]
 
     with open("/var/www/html/render/image_" + uuid + ".html", "wt") as fout:
         with open("webpage/image.html", "rt") as fin:
