@@ -30,6 +30,7 @@ def label_image(image_url, image_title, uuid):
                 if '{{IMAGE_FILE}}' in line:
                     line = line.replace('{{IMAGE_FILE}}', "http://images.mixd.tv/images/tmp/" + input_filename)
                 fout.write(line)
+                print "LINE:", line
 
     # render output image
     subprocess.call([PHANTOMJS_BIN,
