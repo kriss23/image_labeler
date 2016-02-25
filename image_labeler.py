@@ -37,6 +37,7 @@ def label_image(image_url, image_title, uuid):
                      "http://images.mixd.tv/render/image_" + uuid + ".html",
                      "/var/www/html/images/336/" + output_filename,
                      "600px*336px"])
+    print "Done. Image rendered can be found on: http://images.mixd.tv/images/336/" + output_filename,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
