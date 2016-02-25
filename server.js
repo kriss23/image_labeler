@@ -29,19 +29,18 @@ app.get('/image-import/:imageURL/:titleString/:uuid', function(req, res) {
     console.log("running: " + cmd)
     exec(cmd, function(error, stdout, stderr) {
         console.log(stdout)
-    });
+        var URLTitlePart = req.params.titleString.replaceAll(" ", "_")
+        var URLFilename = "http://images.mixd.tv/images/336/" + URLTitlePart + "_" + req.params.uuid + ".jpg"
 
-    var URLTitlePart = req.params.titleString.replaceAll(" ", "_")
-    var URLFilename = "http://images.mixd.tv/images/336/" + URLTitlePart + "_" + req.params.uuid + ".jpg"
-
-    res.send({
-        'result': 'TBD',
-        'msg': {
-            'title': req.params.titleString,
-            'source': req.params.imageURL,
-            'imageID': req.params.uuid,
-            'targetURL': URLFilename
-        }
+        res.send({
+            'result': 'TBD',
+            'msg': {
+                'title': req.params.titleString,
+                'source': req.params.imageURL,
+                'imageID': req.params.uuid,
+                'targetURL': URLFilename
+            }
+        });
     });
 })
 
