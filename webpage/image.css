@@ -6,6 +6,7 @@
       rgba(0, 0, 0, 0.4)
     ), url(image.jpg);
     background-attachment: fixed;
+    background-size: 600px 336px;
     width: 600px;
     height: 336px;
     position: relative;
