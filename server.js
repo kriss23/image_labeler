@@ -17,7 +17,7 @@ app.get('*', function(req, res, next){
     next();
 });
 
-app.get('/image-import/:imageURL/:titleString/:uuid', function(req, res) {
+app.get('/image-import/:imageURL/:titleString/:fileName/:uuid', function(req, res) {
     var cmd = '/usr/bin/python image_labeler.py --url="http://image.tmdb.org/t/p/original/' +
         req.params.imageURL +
         '" --title="' +
@@ -29,7 +29,7 @@ app.get('/image-import/:imageURL/:titleString/:uuid', function(req, res) {
     console.log("running: " + cmd)
     exec(cmd, function(error, stdout, stderr) {
         console.log(stdout)
-        var URLTitlePart = req.params.titleString.replaceAll(" ", "_").toLowerCase()
+        var URLTitlePart = req.params.fileName
         var URLFilename = "http://images.mixd.tv/images/336/" + URLTitlePart + "_" + req.params.uuid + ".jpg"
 
         res.send({
