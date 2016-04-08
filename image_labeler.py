@@ -1,9 +1,11 @@
+# -*- coding: UTF-8 -*-
 #!/bin/python
 
 import urllib
 import argparse
 import time
 import subprocess
+import re
 
 RESOLUTION = "600x336"
 PHANTOMJS_BIN = "/home/ubuntu/install/phantomjs/bin/phantomjs"
