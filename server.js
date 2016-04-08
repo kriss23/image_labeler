@@ -21,7 +21,7 @@ app.get('/image-import/:imageURL/:titleString/:fileName/:uuid', function(req, re
     var cmd = '/usr/bin/python image_labeler.py --url="http://image.tmdb.org/t/p/original/' +
         req.params.imageURL +
         '" --title="' +
-        "'" + req.params.titleString.replace("'", "'\\''") + "'"
+        req.params.titleString
         +
         '" --uuid="' +
         req.params.uuid +
