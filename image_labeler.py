@@ -8,11 +8,27 @@ import subprocess
 RESOLUTION = "600x336"
 PHANTOMJS_BIN = "/home/ubuntu/install/phantomjs/bin/phantomjs"
 
+def convert_to_spaceless_ascii_string(in_string):
+    out = in_string.lower()
+    out = out.replace(u" ", "_")
+    out = out.replace(u":", "_")
+    out = out.replace(u".", "_")
+    out = out.replace(u",", "_")
+    out = out.replace(u";", "_")
+    out = out.replace(u"/", "_")
+    out = out.replace(u"ö", "oe")
+    out = out.replace(u"ü", "ue")
+    out = out.replace(u"ä", "ae")
+    out = out.replace(u"ß", "ss")
+    out = re.sub(r'\W+', '', out)  # strip averythin that's not alphanum or '_'
+    return out
+
+
 def label_image(image_url, image_title, uuid):
     print "downloading image from:", image_url
     # generate unitque filename for tmp file
-    input_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
-    output_filename = image_title.lower().replace(" ", "_") + "_" + uuid + ".jpg"
+    input_filename = convert_to_spaceless_ascii_string(image_title) + "_" + uuid + ".jpg"
+    output_filename = convert_to_spaceless_ascii_string(image_title) + "_" + uuid + ".jpg"
     urllib.urlretrieve (image_url, "/var/www/html/images/tmp/" + input_filename)
 
     # scale image to fit required resolution for our webpage
