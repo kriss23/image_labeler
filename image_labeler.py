@@ -7,11 +7,16 @@ import time
 import subprocess
 import re
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 RESOLUTION = "600x336"
 PHANTOMJS_BIN = "/home/ubuntu/install/phantomjs/bin/phantomjs"
 
 def convert_to_spaceless_ascii_string(in_string):
     out = in_string.lower()
+    out = out.decode("utf8")
     out = out.replace(u" ", "_")
     out = out.replace(u":", "_")
     out = out.replace(u".", "_")
@@ -47,7 +52,7 @@ def label_image(image_url, image_title, uuid):
                     line = line.replace('{{IMAGE_TITLE}}', image_title)
                 if '{{IMAGE_FILE}}' in line:
                     line = line.replace('{{IMAGE_FILE}}', "http://images.mixd.tv/images/tmp/" + input_filename)
-                fout.write(line)
+                fout.write(line.encode("latin1"))
 
     # render output image
     subprocess.call([PHANTOMJS_BIN,
