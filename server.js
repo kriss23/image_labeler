@@ -23,6 +23,8 @@ app.get('/image-import/:imageURL/:titleString/:fileName/:uuid', function(req, re
 	req.params.imageURL +
 	'" --title="' +
 	req.params.titleString
+	'" --filename="' +
+	req.params.titleString
 	+
 	'" --uuid="' +
 	req.params.uuid +

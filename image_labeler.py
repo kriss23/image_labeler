@@ -31,11 +31,11 @@ def convert_to_spaceless_ascii_string(in_string):
     return out
 
 
-def label_image(image_url, image_title, uuid):
+def label_image(image_url, image_title, filename, uuid):
     print "downloading image from:", image_url
     # generate unitque filename for tmp file
     input_filename = convert_to_spaceless_ascii_string(image_title) + "_" + uuid + ".jpg"
-    output_filename = convert_to_spaceless_ascii_string(image_title) + "_" + uuid + ".jpg"
+    output_filename = convert_to_spaceless_ascii_string(filename) + "_" + uuid + ".jpg"
     urllib.urlretrieve (image_url, "/var/www/html/images/tmp/" + input_filename)
 
     # scale image to fit required resolution for our webpage
@@ -66,7 +66,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', help='URL to dowload image from')
     parser.add_argument('--title', help='Title to put on the image')
+    parser.add_argument('--filename', help='Title to put on the image')
     parser.add_argument('--uuid', help='UUID to name the image')
     # parser.add_argument('--restore', action='store_true', default=False, help='Restore from last Backup')
     args = parser.parse_args()
-    label_image(args.url, args.title, args.uuid)
+    label_image(args.url, args.title, args.filename, args.uuid)
